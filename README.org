@@ -9,3 +9,15 @@ http://games.espn.go.com/ffl/livedraftresults
 ** Mock Draft Central
 
 http://www.mockdraftcentral.com/report_adp.jsp
+
+* Normalized / Bugs / Notes
+
+Jax -> Jac
+
+SEAHAWKS D/ST    SEAHAWKS  D/ST  51.60
+SEATTLE          SEA       DEF   60.40
+
+garrett@kiawa:/tmp/draft-1$ dd d/st
+sed: -e expression #1, char 8: unterminated `s' command
+
+I need to have a differential relative 
