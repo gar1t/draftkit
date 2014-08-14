@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+# PYTHON_ARGCOMPLETE_OK
+
+import argcomplete
+import argparse
+import csv
+import subprocess
+
+def player_names(prefix, **kw):
+    with open('players.csv', 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            yield row[0].lower()
+
+p = argparse.ArgumentParser()
+p.add_argument('pattern', metavar='PATTERN',
+               help="A pattern to delete").completer = player_names
+
+argcomplete.autocomplete(p)
+args = p.parse_args()
+
+subprocess.call("sed -i '/%s/Id' players.csv" % args.pattern,
+                shell=True)

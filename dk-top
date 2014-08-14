@@ -1,0 +1,17 @@
+#!/usr/bin/python
+
+import argparse
+import subprocess
+
+p = argparse.ArgumentParser()
+p.add_argument('filters', metavar='PATTERN', nargs='*',
+               help="Filter results with PATTERN")
+
+args = p.parse_args()
+if args.filters:
+    grepchain = ' | '.join(["grep -i \"%s\"" % f for f in args.filters])
+    subprocess.call("cat players.csv | %s | head" % grepchain, shell=True)
+else:
+    subprocess.call("head players.csv", shell=True)
+
+    
