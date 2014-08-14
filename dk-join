@@ -1,0 +1,67 @@
+#!/usr/bin/python
+
+import argparse
+import csv
+import sys
+
+def run(files):
+    data = load_data(files)
+    joined = join_data(data)
+    sort_joined(joined)
+    write_joined(joined)
+    
+def load_data(files):
+    data = {}
+    for spec in files:
+        file_name, weight = parse_spec(spec)
+        for name, team, position, rank in read_csv(file_name):
+            ranks = data.setdefault((name, team, position), [])
+            ranks.append((float(rank), weight))
+    return data
+
+def parse_spec(spec):
+    try:
+        file_name, spec_str = spec.split(':')
+        return file_name, float(spec_str)
+    except ValueError:
+        print 'Invalid file spec - must be FILE:WEIGHT'
+        sys.exit(1)
+
+def read_csv(file_name):
+    with open(file_name, 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            yield row
+
+def join_data(data):
+    joined = []
+    for ((name, team, position), ranks) in data.items():
+        joined_rank = join_ranks(ranks)
+        if joined_rank is not None:
+            joined.append([name, team, position, joined_rank])
+    return joined
+
+def join_ranks(ranks):
+    joined = 0
+    weight_total = sum([weight for _rank, weight in ranks])
+    if weight_total == 0:
+        return None
+    for rank, weight in ranks:
+        joined = joined + (rank * (weight / weight_total))
+    return joined
+
+def sort_joined(joined):
+    joined.sort(lambda a, b: cmp(a[3], b[3]))
+
+def write_joined(joined):
+    out = csv.writer(sys.stdout)
+    for name, team, position, rank in joined:
+        out.writerow([name, team, position, '%0.2f' % rank])
+
+if __name__ == '__main__':
+    p = argparse.ArgumentParser()
+    p.add_argument('files', metavar='FILE:WEIGHT', nargs='+',
+                   help="Files to join")
+    
+    args = p.parse_args()
+    run(args.files)

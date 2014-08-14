@@ -1,6 +1,6 @@
 import csv
 
-url = "http://fantasyfootballcalculator.com/adp_csv.php?format=standard&teams=12"
+urls = ["http://fantasyfootballcalculator.com/adp_csv.php?format=standard&teams=12"]
 
 def players(resp):
     reader = csv.reader(resp)
@@ -22,4 +22,4 @@ def players(resp):
 
 if __name__ == '__main__':
     import base
-    base.run_resp('ffbcalc', url, players)
+    base.run_resp('ffbcalc', urls, players)

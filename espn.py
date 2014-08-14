@@ -1,6 +1,6 @@
 import re
 
-url = 'http://games.espn.go.com/ffl/livedraftresults'
+urls = ['http://games.espn.go.com/ffl/livedraftresults']
 
 def players(soup):
 
@@ -56,4 +56,4 @@ def team_from_dst_name(name):
 
 if __name__ == '__main__':
     import base
-    base.run_soup('espn', url, players)
+    base.run_soup('espn', urls, players)

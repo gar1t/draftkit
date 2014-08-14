@@ -1,6 +1,6 @@
 import re
 
-url = 'http://espn.go.com/fantasy/football/story/_/page/FFLranks14top300/2014-fantasy-football-rankings-preseason-top-300'
+urls = ['http://espn.go.com/fantasy/football/story/_/page/FFLranks14top300/2014-fantasy-football-rankings-preseason-top-300']
 
 def players(soup):
 
@@ -68,4 +68,4 @@ def strip_position_rank(position):
 
 if __name__ == '__main__':
     import base
-    base.run_soup('espntop', url, players)
+    base.run_soup('espntop', urls, players)
