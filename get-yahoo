@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import re
 
 urls = [
@@ -29,7 +30,6 @@ def players(soup):
 
 def split_team_position(val):
     return val.split(' - ')
-
 
 if __name__ == '__main__':
     import base

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "usage: get-all TARGET-DIR"
+    exit 1
+fi
+
+target_dir="${1%%/}"
+
+for script in get-*; do
+    if [ "$script" = "get-all" ]; then
+	continue
+    fi
+    csv_file="$target_dir/${script:4}.csv"
+    ./$script > $csv_file
+done

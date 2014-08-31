@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import re
 
 urls = ['http://games.espn.go.com/ffl/livedraftresults']
@@ -5,6 +6,7 @@ urls = ['http://games.espn.go.com/ffl/livedraftresults']
 def players(soup):
 
     for name_link in soup.find_all('a', playerid=True):
+
         try:
             # name
             name = name_link.string

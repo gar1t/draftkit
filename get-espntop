@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import re
 
 urls = ['http://espn.go.com/fantasy/football/story/_/page/FFLranks14top300/2014-fantasy-football-rankings-preseason-top-300']

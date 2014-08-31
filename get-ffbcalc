@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import csv
 
 urls = ["http://fantasyfootballcalculator.com/adp_csv.php?format=standard&teams=12"]

@@ -1,0 +1,11 @@
+#!/usr/bin/python
+import argparse
+import csv
+
+if __name__ == '__main__':
+    p = argparse.ArgumentParser()
+    p.add_argument('source', metavar='SOURCE', help="Source ranks to apply")
+    p.add_argument('target', metavar='TARGET', help="Target CSV to apply to")
+    
+    args = p.parse_args()
+    run(args.files)
