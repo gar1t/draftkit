@@ -10,7 +10,7 @@ def players(soup):
             name = name_link.text
             team_small = name_link.find_next_sibling('small')
             if team_small:
-                team = strip_parens(team_small.text)
+                team = strip_nonteam(team_small.text)
             else:
                 dst_result = dst_name_team(name)
                 if dst_result:
@@ -43,8 +43,8 @@ def dst_name_team(name):
     else:
         return None
 
-def strip_parens(val):
-    m = re.search('\((.*)\)', val)
+def strip_nonteam(val):
+    m = re.search('([A-Z]*)', val)
     if m:
         return m.groups()[0]
     else:

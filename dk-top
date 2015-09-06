@@ -10,8 +10,10 @@ p.add_argument('filters', metavar='PATTERN', nargs='*',
 args = p.parse_args()
 if args.filters:
     grepchain = ' | '.join(["grep -i \"%s\"" % f for f in args.filters])
-    subprocess.call("cat players.csv | %s | head" % grepchain, shell=True)
+    subprocess.call(
+        "cat players.csv | %s | head | column -t -s," % grepchain,
+        shell=True)
 else:
-    subprocess.call("head players.csv", shell=True)
-
-    
+    subprocess.call(
+        "head players.csv | column -t -s,",
+        shell=True)

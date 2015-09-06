@@ -1,2 +1,26 @@
 #!/usr/bin/python
-urls = ["http://www.fftoolbox.com/football/adp.cfm"]
+import re
+
+urls =['http://fftoolbox.scout.com/football/adp.cfm',
+       'http://fftoolbox.scout.com/football/adp.cfm?page=2',
+       'http://fftoolbox.scout.com/football/adp.cfm?page=3',
+       'http://fftoolbox.scout.com/football/adp.cfm?page=4']
+
+def players(soup):
+    grid = soup.find('table', class_='grid')
+    for row in grid.find_all('tr')[1:]:
+        try:
+            cells = row.find_all('td')
+            yield {
+                'name': cells[1].string,
+                'team': cells[3].string,
+                'position': cells[2].string,
+                'rank': cells[0].string
+            }
+        except Exception, e:
+            print e
+            import pdb;pdb.set_trace()
+
+if __name__ == '__main__':
+    import base
+    base.run_soup('fftoolbox', urls, players)

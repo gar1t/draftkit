@@ -20,11 +20,17 @@ def load_data(files):
     return data
 
 def parse_spec(spec):
-    try:
-        file_name, spec_str = spec.split(':')
-        return file_name, float(spec_str)
-    except ValueError:
-        print 'Invalid file spec - must be FILE:WEIGHT'
+    parts = spec.split(':')
+    if len(parts) == 1:
+        return parts[0], 1.0
+    elif len(parts) == 2:
+        try:
+            return parts[0], float(parts[1])
+        except ValueError:
+            print 'Weight must be a number'
+            sys.exit(1)
+    else:
+        print 'File spec must be FILE[:WEIGHT]'
         sys.exit(1)
 
 def read_csv(file_name):
@@ -60,8 +66,8 @@ def write_joined(joined):
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
-    p.add_argument('files', metavar='FILE:WEIGHT', nargs='+',
-                   help="Files to join")
+    p.add_argument('files', metavar='FILE[:WEIGHT]', nargs='+',
+                   help="Files to join - WEIGHT is 1 by default")
     
     args = p.parse_args()
     run(args.files)

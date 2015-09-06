@@ -5,9 +5,12 @@ urls = ['http://espn.go.com/fantasy/football/story/_/id/12866396/top-300-ranking
 
 def players(soup):
 
-    name_link_re = re.compile('http://espn.go.com/nfl/')
+    name_link_re = re.compile('^http://espn.go.com/nfl/player|^/nfl/team/')
 
     for name_link in soup.find_all('a', href=name_link_re):
+
+        if is_category_link(name_link):
+            continue
 
         try:
             # name
@@ -29,7 +32,7 @@ def players(soup):
             # get team from name if DEF
             if position == 'DST':
                 team = name
-                position = 'D/ST'
+                position = 'DST'
 
             yield {
                 'name': name,
@@ -40,6 +43,9 @@ def players(soup):
 
         except Exception, e:
             raise
+
+def is_category_link(link):
+    return link.parent.attrs.get('class') == ['category-link']
 
 if __name__ == '__main__':
     import base

@@ -43,7 +43,7 @@ def players(soup):
             import pdb;pdb.set_trace()
 
 def team_val(s):
-    m = re.search(' *,? *(.+)', s)
+    m = re.search('.* (.+)', s)
     if m:
         return m.groups()[0]
     else:
