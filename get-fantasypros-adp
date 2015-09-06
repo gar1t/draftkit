@@ -59,4 +59,4 @@ def strip_position_rank(position):
 
 if __name__ == '__main__':
     import base
-    base.run_soup('fantasypros', urls, players)
+    base.run_soup('fantasypros-adp', urls, players)

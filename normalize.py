@@ -133,6 +133,7 @@ names = {
     'CECIL SHORTS III': 'CECIL SHORTS',
     "LE'VEON BELL": 'LEVEON BELL',
     'TY HILTON': 'T.Y. HILTON',
+    'CJ ANDERSON': 'C.J. ANDERSON',
 }
 
 def name(name, team=None):
