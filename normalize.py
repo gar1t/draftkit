@@ -2,6 +2,7 @@ import re
 
 teams = {
     'ARIZONA CARDINALS': 'AZ',
+    'ATLANTA FALCONS': 'ATL',
     'BALTIMORE RAVENS': 'BAL',
     'BUFFALO BILLS': 'BUF',
     'CAROLINA PANTHERS': 'CAR',
@@ -14,19 +15,57 @@ teams = {
     'GREEN BAY PACKERS': 'GB',
     'HOUSTON TEXANS': 'HOU',
     'INDIANAPOLIS COLTS': 'IND',
+    'JACKSONVILLE JAGUARS': 'JAC',
     'KANSAS CITY CHIEFS': 'KC',
     'MIAMI DOLPHINS': 'MIA',
-    'MINNESOTA VIKINGS': 'MN',
+    'MINNESOTA VIKINGS': 'MIN',
     'NEW ENGLAND PATRIOTS': 'NE',
     'NEW ORLEANS SAINTS': 'NO',
     'NEW YORK GIANTS': 'NYG',
     'NEW YORK JETS': 'NYJ',
+    'OAKLAND RAIDERS': 'OAK',
     'PHILADELPHIA EAGLES': 'PHI',
     'PITTSBURGH STEELERS': 'PIT',
+    'SAN DIEGO CHARGERS': 'SD',
     'SAN FRANCISCO 49ERS': 'SF',
     'SEATTLE SEAHAWKS': 'SEA',
     'ST. LOUIS RAMS': 'STL',
     'TAMPA BAY BUCCANEERS': 'TB',
+    'TENNESSEE TITANS': 'TEN',
+    'WASHINGTON REDSKINS': 'WAS',
+
+    'ARIZONA': 'AZ',
+    'ATLANTA': 'ATL',
+    'BALTIMORE': 'BAL',
+    'BUFFALO': 'BUF',
+    'CAROLINA': 'CAR',
+    'CHICAGO': 'CHI',
+    'CINCINNATI': 'CIN',
+    'CLEVELAND': 'CLE',
+    'DALLAS': 'DAL',
+    'DENVER': 'DEN',
+    'DETROIT': 'DET',
+    'GREEN BAY': 'GB',
+    'HOUSTON': 'HOU',
+    'INDIANAPOLIS': 'IND',
+    'JACKSONVILLE': 'JAC',
+    'KANSAS CITY': 'KC',
+    'MIAMI': 'MIA',
+    'MINNESOTA': 'MIN',
+    'NEW ENGLAND': 'NE',
+    'NEW ORLEANS': 'NO',
+    'NEW YORK': 'NYG',
+    'NEW YORK': 'NYJ',
+    'OAKLAND': 'OAK',
+    'PHILADELPHIA': 'PHI',
+    'PITTSBURGH': 'PIT',
+    'SAN DIEGO': 'SD',
+    'SAN FRANCISCO': 'SF',
+    'SEATTLE': 'SEA',
+    'ST. LOUIS': 'STL',
+    'TAMPA BAY': 'TB',
+    'TENNESSEE': 'TEN',
+    'WASHINGTON': 'WAS',
 
     '49ERS': 'SF',
     'BEARS': 'CHI',
@@ -36,24 +75,30 @@ teams = {
     'BROWNS': 'CLE',
     'BUCCANEERS': 'TB',
     'CARDINALS': 'AZ',
+    'CHARGERS': 'SD',
     'CHIEFS': 'KC',
     'COLTS': 'IND',
     'COWBOYS': 'DAL',
     'DOLPHINS': 'MIA',
     'EAGLES': 'PHI',
+    'FALCONS': 'ATL',
     'GIANTS': 'NYG',
+    'JAGUARS': 'JAC',
     'JETS': 'NYJ',
     'LIONS': 'DET',
     'PACKERS': 'GB',
     'PANTHERS': 'CAR',
     'PATRIOTS': 'NE',
+    'RAIDERS': 'OAK',
     'RAMS': 'STL',
     'RAVENS': 'BAL',
+    'REDSKINS': 'WAS',
     'SAINTS': 'NO',
     'SEAHAWKS': 'SEA',
     'STEELERS': 'PIT',
     'TEXANS': 'HOU',
-    'VIKINGS': 'MN',
+    'TITANS': 'TEN',
+    'VIKINGS': 'MIN',
     'WASHINGTON': 'WAS',
 
     'JAX': 'JAC',
@@ -73,62 +118,9 @@ positions = {
 }
 
 names = {
-    'ARIZONA CARDINALS': 'ARZ DST',
-    'BALTIMORE RAVENS': 'BAL DST',
-    'BUFFALO BILLS': 'BUF DST',
-    'CAROLINA PANTHER': 'CAR DST',
-    'CHICAGO BEARS': 'CHI DST',
-    'CINCINNATI BENGALS': 'CIN DST',
-    'CLEVELAND BROWNS': 'CLE DST',
-    'DALLAS COWBOYS': 'DAL DST',
-    'DENVER BRONCOS': 'DEN DST',
-    'DETROIT LIONS': 'DET DST',
-    'GREEN BAY PACKERS': 'GB DST',
-    'HOUSTON TEXANS': 'HOU DST',
-    'INDIANAPOLIS COLTS': 'IND DST',
-    'KANSAS CITY CHIEFS': 'KC DST',
-    'MIAMI DOLPHINS': 'MIA DST',
-    'MINNESOTA VIKINGS': 'MIN DST',
-    'NEW ENGLAND PATRIOTS': 'NE DST',
-    'NEW ORLEANS SAINTS': 'NO DST',
-    'NEW YORK GIANTS': 'NYG DST',
-    'NEW YORK JETS': 'NYJ DST',
-    'PHILADELPHIA EAGLES': 'PHI DST',
-    'PITTSBURGH STEELERS': 'PIT DST',
-    'SAN FRANCISCO 49ERS': 'SF DST',
-    'SEATTLE SEAHAWKS': 'SEA DST',
-    'ST. LOUIS RAMS': 'STL DST',
-    'TAMPA BAY BUCANEERS': 'TB DST',
-
-    'ARIZONA': 'ARZ DST',
-    'BALTIMORE': 'BAL DST',
-    'BUFFALO': 'BUF DST',
-    'CAROLINA': 'CAR DST',
-    'CHICAGO': 'CHI DST',
-    'CINCINNATI': 'CIN DST',
-    'CLEVELAND': 'CLE DST',
-    'DALLAS': 'DAL DST',
-    'DENVER': 'DEN DST',
-    'DETROIT': 'DET DST',
-    'GREEN BAY': 'GB DST',
-    'HOUSTON': 'HOU DST',
-    'INDIANAPOLIS': 'IND DST',
-    'KANSAS CITY': 'KC DST',
-    'MIAMI': 'MIA DST',
-    'MINNESOTA': 'MIN DST',
-    'NEW ENGLAND': 'NE DST',
-    'NEW ORLEANS': 'NO DST',
-    'NEW YORK': 'NYG DST',
-    'NEW YORK': 'NYJ DST',
-    'PHILADELPHIA': 'PHI DST',
-    'PITTSBURGH': 'PIT DST',
-    'SAN FRANCISCO': 'SF DST',
-    'SEATTLE': 'SEA DST',
-    'ST. LOUIS': 'STL DST',
-    'TAMPA BAY': 'TB DST',
-
     'STEVE SMITH SR.': 'STEVE SMITH',
     'ODELL BECKHAM JR.': 'ODELL BECKHAM',
+    'ODELL BECKHAM JR': 'ODELL BECKHAM',
     'STEVIE JOHNSON': 'STEVE JOHNSON',
     'CECIL SHORTS III': 'CECIL SHORTS',
     "LE'VEON BELL": 'LEVEON BELL',
@@ -143,13 +135,15 @@ def name(name, team=None):
     name_upper = names.get(name_upper, name_upper)
     return normalize_defense_name(name_upper, team)
 
-def normalize_defense_name(_name, _team):
-    if not _team:
-        return _name
-    if _name.endswith('DST'):
-        return '%s DST' % team(_team)
-    else:
-        return _name
+def normalize_defense_name(name_, team_):
+    if not team_:
+        return name_
+    if name_.endswith('DST'):
+        return '%s DST' % team(team_)
+    defense_team = teams.get(name_)
+    if defense_team:
+        return '%s DST' % defense_team
+    return name_
 
 def team(team):
     team_upper = team.upper()

@@ -19,5 +19,7 @@ p.add_argument('pattern', metavar='PATTERN',
 argcomplete.autocomplete(p)
 args = p.parse_args()
 
-subprocess.call("sed -i '/%s/Id' players.csv" % args.pattern,
-                shell=True)
+subprocess.call(
+    "cp players.csv players.bak;"
+    "sed -i '/%s/Id' players.csv"
+    % args.pattern, shell=True)

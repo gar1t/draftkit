@@ -1,0 +1,63 @@
+#!/usr/bin/python
+
+import argparse
+import csv
+import sys
+
+def run(base_csv, compare_csv):
+    base = load_data(base_csv)
+    compare = load_data(compare_csv)
+    applied = apply(base, compare)
+    sort_applied(applied)
+    write_applied(applied)
+    
+def load_data(file):
+    data = {}
+    for name, team, position, rank in read_csv(file):
+        data[(name, team, position)] = float(rank)
+    return data
+
+def read_csv(file_name):
+    with open(file_name, 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            yield row
+
+def apply(base, compare):
+    applied = []
+    for ((name, team, position), base_rank) in base.items():
+        compare_rank = compare.get((name, team, position))
+        compare_diff = rank_diff(base_rank, compare_rank) 
+        applied.append([name, team, position, base_rank, compare_diff])
+    return applied
+
+def rank_diff(base, compare):
+    if compare is not None:
+        return compare and compare - base
+    else:
+        return None
+
+def sort_applied(applied):
+    applied.sort(lambda a, b: cmp(a[3], b[3]))
+
+def write_applied(applied):
+    out = csv.writer(sys.stdout)
+    for name, team, position, rank, diff in applied:
+        out.writerow(
+            [name, team, position, format_rank(rank), format_diff(diff)])
+
+def format_rank(rank):
+    return '%0.2f' % rank
+
+def format_diff(diff):
+    if diff is not None:
+        return "%+0.1f" % diff
+    else:
+        return ''
+    
+if __name__ == '__main__':
+    p = argparse.ArgumentParser()
+    p.add_argument('base', metavar='FILE', help="Base file to apply to")
+    p.add_argument('compare', metavar='FILE', help="File to compare to base")
+    args = p.parse_args()
+    run(args.base, args.compare)

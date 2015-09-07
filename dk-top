@@ -11,9 +11,9 @@ args = p.parse_args()
 if args.filters:
     grepchain = ' | '.join(["grep -i \"%s\"" % f for f in args.filters])
     subprocess.call(
-        "cat players.csv | %s | head | column -t -s," % grepchain,
+        "cat players.csv | %s | head -n 20 | column -t -s," % grepchain,
         shell=True)
 else:
     subprocess.call(
-        "head players.csv | column -t -s,",
+        "head -n 20 players.csv | column -t -s,",
         shell=True)

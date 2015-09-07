@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ -e players.bak ]; then
+    cp players.bak players.csv
+    echo "Reverted players.csv to last backup"
+else
+    echo "players.bak doesn't exist - can't revert"
+fi

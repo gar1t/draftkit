@@ -1,0 +1,56 @@
+#!/bin/bash -eu
+
+if [ "$#" -ne 1 ]; then
+    echo "usage: $0 DRAFT-DIR"
+    exit 1
+fi
+
+dir="$1"
+weights=(
+    espn:3
+    espntop:1
+    fantasypros-adp:3
+    fantasypros-ecr:10
+    ffbcalc:10
+    yahoo:10
+)
+compare=espntop
+
+file-weight-args() {
+    for item in "${weights[@]}"; do
+        echo -n $item | sed "s~^~ $dir/~" | sed s/:/.csv:/
+    done
+}
+
+echo "Initializing $dir"
+mkdir -p "$dir"
+
+./get-all "$dir"
+
+echo "Creating players.csv"
+./dk-join $(file-weight-args) > "$dir/tmp-players"
+./dk-apply "$dir/tmp-players" "$dir/$compare.csv" > "$dir/players.csv"
+
+echo "Creating draft-env"
+cat > $dir/draft-env <<EOF
+alias tt=$(pwd)/dk-top
+export PATH=$(pwd):\$PATH
+EOF
+
+cat <<EOF
+
+Your draft is setup! To run your draft, setup your environment:
+
+  \$ cd $dir
+  \$ . draft-env
+
+To list the top players, run:
+
+  \$ tt [POSITION]
+
+To remove a player, run:
+
+  \$ dk-rm PLAYER
+
+Good luck!
+EOF
