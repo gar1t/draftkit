@@ -49,4 +49,4 @@ def is_category_link(link):
 
 if __name__ == '__main__':
     import base
-    base.run_soup('espntop', urls, players)
+    base.run_soup('espn-ecr', urls, players)

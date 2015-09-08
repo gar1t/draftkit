@@ -7,14 +7,14 @@ fi
 
 dir="$1"
 weights=(
-    espn:3
-    espntop:1
-    fantasypros-adp:3
+    espn-adp:3
+    espn-ecr:1
+    fantasypros-adp:10
     fantasypros-ecr:10
-    ffbcalc:10
-    yahoo:10
+    ffbcalc:5
+    yahoo:3
 )
-compare=espntop
+compare=espn-ecr
 
 file-weight-args() {
     for item in "${weights[@]}"; do

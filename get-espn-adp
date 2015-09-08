@@ -58,4 +58,4 @@ def team_from_dst_name(name):
 
 if __name__ == '__main__':
     import base
-    base.run_soup('espn', urls, players)
+    base.run_soup('espn-adp', urls, players)

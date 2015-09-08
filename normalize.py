@@ -1,7 +1,7 @@
 import re
 
 teams = {
-    'ARIZONA CARDINALS': 'AZ',
+    'ARIZONA CARDINALS': 'ARI',
     'ATLANTA FALCONS': 'ATL',
     'BALTIMORE RAVENS': 'BAL',
     'BUFFALO BILLS': 'BUF',
@@ -34,7 +34,7 @@ teams = {
     'TENNESSEE TITANS': 'TEN',
     'WASHINGTON REDSKINS': 'WAS',
 
-    'ARIZONA': 'AZ',
+    'ARIZONA': 'ARI',
     'ATLANTA': 'ATL',
     'BALTIMORE': 'BAL',
     'BUFFALO': 'BUF',
@@ -74,7 +74,7 @@ teams = {
     'BRONCOS': 'DEN',
     'BROWNS': 'CLE',
     'BUCCANEERS': 'TB',
-    'CARDINALS': 'AZ',
+    'CARDINALS': 'ARI',
     'CHARGERS': 'SD',
     'CHIEFS': 'KC',
     'COLTS': 'IND',
@@ -125,6 +125,7 @@ names = {
     'CECIL SHORTS III': 'CECIL SHORTS',
     "LE'VEON BELL": 'LEVEON BELL',
     'TY HILTON': 'T.Y. HILTON',
+    'TJ YELDON': 'T.J. YELDON',
     'CJ ANDERSON': 'C.J. ANDERSON',
 }
 
