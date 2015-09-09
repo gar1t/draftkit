@@ -9,11 +9,16 @@ dir="$1"
 weights=(
     espn-adp:3
     espn-ecr:1
-    fantasypros-adp:10
-    fantasypros-ecr:10
-    ffbcalc:5
-    yahoo:3
+    fantasypros-adp:5
+    fantasypros-ecr:2
+    ffbcalc:2
 )
+
+notused=(
+    fftoolbox
+    yahoo
+)
+
 compare=espn-ecr
 
 file-weight-args() {
@@ -30,6 +35,7 @@ mkdir -p "$dir"
 echo "Creating players.csv"
 ./dk-join $(file-weight-args) > "$dir/tmp-players"
 ./dk-apply "$dir/tmp-players" "$dir/$compare.csv" > "$dir/players.csv"
+rm "$dir/tmp-players"
 
 echo "Creating draft-env"
 cat > $dir/draft-env <<EOF
