@@ -38,6 +38,7 @@ echo "Creating players.csv"
 rm "$dir/tmp-players"
 
 echo "Creating draft-env"
+
 cat > $dir/draft-env <<EOF
 alias tt=$(pwd)/dk-top
 export PATH=$(pwd):\$PATH
@@ -57,6 +58,10 @@ To list the top players, run:
 To remove a player, run:
 
   \$ dk-rm PLAYER
+
+If you make a mistake, run:
+
+  \$ dk-revert
 
 Good luck!
 EOF
