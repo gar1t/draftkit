@@ -1,11 +1,11 @@
 #!/usr/bin/python
 import re
 
-urls = ['http://espn.go.com/fantasy/football/story/_/id/12866396/top-300-rankings-2015']
+urls = ['http://www.espn.com/fantasy/football/story/_/id/16287927/2016-fantasy-football-rankings-top-300']
 
 def players(soup):
 
-    name_link_re = re.compile('^http://espn.go.com/nfl/player|^/nfl/team/')
+    name_link_re = re.compile('^http://www.espn.com/nfl/player|^/nfl/team/')
 
     for name_link in soup.find_all('a', href=name_link_re):
 
@@ -17,17 +17,16 @@ def players(soup):
             name = name_link.string
             name_cell = name_link.parent
 
+            # position
+            position_cell = name_cell.next_sibling
+            position = position_cell.text.strip()
+
             # team
-            team_cell = name_cell.next_sibling
-            team = team_cell.string.strip()
+            team_cell = position_cell.next_sibling
+            team = team_cell.text.strip()
 
             # rank
-            rank_cell = name_link.previous_sibling
-            rank = rank_cell.string.strip()[:-1]
-            
-            # position
-            position_cell = name_link.next_sibling
-            position = position_cell.string.strip()[2:]
+            rank = name_cell.text.split()[0][:-1]
 
             # get team from name if DEF
             if position == 'DST':
