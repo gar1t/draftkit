@@ -22,7 +22,7 @@ def players(soup):
             position_td =  name_td.find_next_sibling('td')
             position = strip_position_rank(position_td.string)
 
-            rank = position_td.find_next_siblings('td')[2].string
+            rank = position_td.find_next_siblings('td')[3].string
 
             yield {
                 'name': name,
@@ -49,7 +49,7 @@ def strip_nonteam(val):
         return m.groups()[0]
     else:
         return val
-    
+
 def strip_position_rank(position):
     m = re.search('([^0-9]+)[0-9]*', position)
     if m:

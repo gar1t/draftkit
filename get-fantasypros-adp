@@ -8,15 +8,16 @@ def players(soup):
     for name_link in soup.find_all('a', href=re.compile('^/nfl/(players|teams/.*-defense)')):
         try:
             name = name_link.text
-            team_small = name_link.find_next_sibling('small')
-            if team_small:
-                team = strip_nonteam(team_small.text)
+
+            if name.endswith('DST'):
+                team = name[0:-4]
+                name = "%s DST" % team
             else:
-                dst_result = dst_name_team(name)
-                if dst_result:
-                    name, team = dst_result
-                else:
+                next_smalls = name_link.find_next_siblings('small')
+                team_small = next_smalls[0] if next_smalls else None
+                if not team_small:
                     continue
+                team = strip_nonteam(team_small.text)
 
             name_td = name_link.find_parent('td')
             position_td =  name_td.find_next_sibling('td')
@@ -34,22 +35,13 @@ def players(soup):
         except Exception, e:
             base.debug(e)
 
-def dst_name_team(name):
-    m = re.search('(.*) Defense', name)
-    if m:
-        team = m.groups()[0]
-        name = '%s DST' % team
-        return name, team
-    else:
-        return None
-
 def strip_nonteam(val):
     m = re.search('([A-Z]*)', val)
     if m:
         return m.groups()[0]
     else:
         return val
-    
+
 def strip_position_rank(position):
     m = re.search('([^0-9]+)[0-9]*', position)
     if m:

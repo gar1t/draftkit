@@ -1,0 +1,3 @@
+#!/bin/bash
+
+grep + players.csv | column -t -s,

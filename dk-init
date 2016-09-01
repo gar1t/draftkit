@@ -9,13 +9,13 @@ dir="$1"
 weights=(
     espn-adp:3
     espn-ecr:1
-    fantasypros-adp:5
-    fantasypros-ecr:2
-    ffbcalc:2
+    fantasypros-adp:3
+    fantasypros-ecr:3
+    ffbcalc:3
+    fftoolbox:3
 )
 
 notused=(
-    fftoolbox
     yahoo
 )
 
@@ -40,7 +40,6 @@ rm "$dir/tmp-players"
 echo "Creating draft-env"
 
 cat > $dir/draft-env <<EOF
-alias tt=$(pwd)/dk-top
 export PATH=$(pwd):\$PATH
 EOF
 

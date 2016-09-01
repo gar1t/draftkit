@@ -6,10 +6,10 @@ import sys
 
 def run(files):
     data = load_data(files)
-    joined = join_data(data)
+    joined = join_data(data, len(files))
     sort_joined(joined)
     write_joined(joined)
-    
+
 def load_data(files):
     data = {}
     for spec in files:
@@ -39,9 +39,11 @@ def read_csv(file_name):
         for row in reader:
             yield row
 
-def join_data(data):
+def join_data(data, source_count):
     joined = []
     for ((name, team, position), ranks) in data.items():
+        if len(ranks) < source_count:
+            sys.stderr.write("**************** %s (%i)\n" % (name, len(ranks)))
         joined_rank = join_ranks(ranks)
         if joined_rank is not None:
             joined.append([name, team, position, joined_rank])
@@ -68,6 +70,6 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser()
     p.add_argument('files', metavar='FILE[:WEIGHT]', nargs='+',
                    help="Files to join - WEIGHT is 1 by default")
-    
+
     args = p.parse_args()
     run(args.files)
