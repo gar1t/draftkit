@@ -8,7 +8,7 @@ fi
 dir="$1"
 weights=(
     espn-adp:2
-    espn-ecr:1
+    espn-ecr:0
     fantasypros-adp:4
     fantasypros-ecr:4
     ffbcalc:4
@@ -16,10 +16,7 @@ weights=(
     yahoo:1
 )
 
-notused=(
-)
-
-compare=espn-ecr
+compare=espn-adp
 
 file-weight-args() {
     for item in "${weights[@]}"; do
