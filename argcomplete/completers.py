@@ -15,19 +15,19 @@ def _call(*args, **kwargs):
 
 class ChoicesCompleter(object):
     def __init__(self, choices):
-        self.choices = []
-        for choice in choices:
-            if isinstance(choice, bytes):
-                choice = choice.decode(sys_encoding)
-            if not isinstance(choice, str):
-                choice = str(choice)
-            self.choices.append(choice)
+        self.choices = choices
 
-    def __call__(self, prefix, **kwargs):
-        return (c for c in self.choices if c.startswith(prefix))
+    def _convert(self, choice):
+        if isinstance(choice, bytes):
+            choice = choice.decode(sys_encoding)
+        if not isinstance(choice, str):
+            choice = str(choice)
+        return choice
 
-def EnvironCompleter(prefix, **kwargs):
-    return (v for v in os.environ if v.startswith(prefix))
+    def __call__(self, **kwargs):
+        return (self._convert(c) for c in self.choices)
+
+EnvironCompleter = ChoicesCompleter(os.environ)
 
 class FilesCompleter(object):
     """
@@ -92,3 +92,17 @@ class _FilteredFilesCompleter(object):
 class DirectoriesCompleter(_FilteredFilesCompleter):
     def __init__(self):
         _FilteredFilesCompleter.__init__(self, predicate=os.path.isdir)
+
+class SuppressCompleter(object):
+    """
+    A completer used to suppress the completion of specific arguments
+    """
+
+    def __init__(self):
+        pass
+
+    def suppress(self):
+        """
+        Decide if the completion should be suppressed
+        """
+        return True
