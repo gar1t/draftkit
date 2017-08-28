@@ -1,50 +1,39 @@
 #!/usr/bin/python
 import re
 
-urls = ['http://www.espn.com/fantasy/football/story/_/id/16287927/2016-fantasy-football-rankings-top-300']
+urls = [
+    'http://games.espn.com/ffl/tools/projections',
+    'http://games.espn.com/ffl/tools/projections?startIndex=40',
+    'http://games.espn.com/ffl/tools/projections?startIndex=80',
+    'http://games.espn.com/ffl/tools/projections?startIndex=120',
+    'http://games.espn.com/ffl/tools/projections?startIndex=160',
+    'http://games.espn.com/ffl/tools/projections?startIndex=200',
+]
 
 def players(soup):
 
-    name_link_re = re.compile('^http://www.espn.com/nfl/player|^/nfl/team/')
-
-    for name_link in soup.find_all('a', href=name_link_re):
-
-        if is_category_link(name_link):
-            continue
-
+    for name_link in soup.find_all('a', playerid=re.compile("\d+")):
         try:
-            # name
+            if name_link.string is None:
+                continue
+
+            rank = int(name_link.parent.previousSibling.string)
             name = name_link.string
-            name_cell = name_link.parent
-
-            # position
-            position_cell = name_cell.next_sibling
-            position = position_cell.text.strip()
-
-            # team
-            team_cell = position_cell.next_sibling
-            team = team_cell.text.strip()
-
-            # rank
-            rank = name_cell.text.split()[0][:-1]
-
-            # get team from name if DEF
-            if position == 'DST':
-                team = name
-                position = 'DST'
+            if name.endswith('D/ST'):
+                team = name.split(' ')[0]
+                pos = "DST"
+            else:
+                team, pos = name_link.nextSibling.string[2:].split(u'\xa0')[:2]
 
             yield {
                 'name': name,
                 'team': team,
-                'position': position,
+                'position': pos,
                 'rank': rank
             }
 
         except Exception, e:
             raise
-
-def is_category_link(link):
-    return link.parent.attrs.get('class') == ['category-link']
 
 if __name__ == '__main__':
     import base

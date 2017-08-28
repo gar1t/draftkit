@@ -4,9 +4,9 @@ import argparse
 import csv
 import sys
 
-def run(files):
+def run(files, keep_thresh):
     data = load_data(files)
-    joined = join_data(data, len(files))
+    joined = join_data(data, len(files), keep_thresh)
     sort_joined(joined)
     write_joined(joined)
 
@@ -39,12 +39,21 @@ def read_csv(file_name):
         for row in reader:
             yield row
 
-def join_data(data, source_count):
+def join_data(data, source_count, keep_thresh):
     joined = []
     for ((name, team, position), ranks) in data.items():
-        if len(ranks) < source_count:
-            sys.stderr.write("**************** %s (%i)\n" % (name, len(ranks)))
         joined_rank = join_ranks(ranks)
+        if len(ranks) < source_count:
+            if keep_thresh is None:
+                sys.stderr.write(
+                    "WARNING: missing sources for %s [rank=%0.2f] (got %i of %i)\n"
+                    % (name, joined_rank, len(ranks), source_count))
+            else:
+                if len(ranks) < keep_thresh:
+                    sys.stderr.write(
+                        "INFO: dropping %s [rank=%0.2f] (not enough sources - %i of %i)\n"
+                        % (name, joined_rank, len(ranks), source_count))
+                    continue
         if joined_rank is not None:
             joined.append([name, team, position, joined_rank])
     return joined
@@ -70,6 +79,8 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser()
     p.add_argument('files', metavar='FILE[:WEIGHT]', nargs='+',
                    help="Files to join - WEIGHT is 1 by default")
-
+    p.add_argument('-k', '--keep-threshold', type=int,
+                   help=("mininum number of sources required to keep a player"
+                         "(keeps all by default)"))
     args = p.parse_args()
-    run(args.files)
+    run(args.files, args.keep_threshold)

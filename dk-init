@@ -7,16 +7,16 @@ fi
 
 dir="$1"
 weights=(
-    espn-adp:3
+    espn-adp:2
     espn-ecr:1
-    fantasypros-adp:3
-    fantasypros-ecr:3
-    ffbcalc:3
-    fftoolbox:3
+    fantasypros-adp:4
+    fantasypros-ecr:4
+    ffbcalc:4
+    fftoolbox:4
+    yahoo:1
 )
 
 notused=(
-    yahoo
 )
 
 compare=espn-ecr
@@ -56,11 +56,11 @@ To list the top players, run:
 
 To remove a player, run:
 
-  \$ dk-rm PLAYER
+  \$ rr PLAYER
 
 If you make a mistake, run:
 
-  \$ dk-revert
+  \$ rv
 
 Good luck!
 EOF

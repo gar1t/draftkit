@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import csv
 
-urls = ["http://fantasyfootballcalculator.com/adp_csv.php?format=standard&teams=12"]
+urls = ["https://fantasyfootballcalculator.com/adp_csv.php?format=standard&teams=12"]
 
 def players(resp):
     reader = csv.reader(resp)

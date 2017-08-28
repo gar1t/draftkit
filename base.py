@@ -17,13 +17,18 @@ def run_impl(name, urls, players, resp_handler):
     sys.stderr.write("Getting data for for %s\n" % name)
     out = csv.writer(sys.stdout)
     for url in urls:
-        resp = urllib2.urlopen(url)
+        resp = _urlopen(url)
         for p in players(resp_handler(resp)):
             name = normalize.name(p['name'], p['team'])
             team = normalize.team(p['team'])
             position = normalize.position(p['position'])
             rank = p['rank']
             out.writerow([name, team, position, rank])
+
+def _urlopen(url):
+    req = urllib2.Request(url)
+    req.add_header("User-Agent", "evil marvin")
+    return urllib2.urlopen(req)
 
 def debug(e):
     traceback.print_exc()
