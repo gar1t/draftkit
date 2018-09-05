@@ -1,4 +1,5 @@
 import csv
+import ssl
 import sys
 import traceback
 import urllib2
@@ -28,7 +29,10 @@ def run_impl(name, urls, players, resp_handler):
 def _urlopen(url):
     req = urllib2.Request(url)
     req.add_header("User-Agent", "evil marvin")
-    return urllib2.urlopen(req)
+    return urllib2.urlopen(req, context=_unverifying_context())
+
+def _unverifying_context():
+    return ssl.SSLContext(ssl.PROTOCOL_SSLv23)
 
 def debug(e):
     traceback.print_exc()

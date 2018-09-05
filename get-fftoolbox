@@ -1,10 +1,14 @@
 #!/usr/bin/python
 import re
 
-urls =['http://fftoolbox.scout.com/football/adp.cfm',
-       'http://fftoolbox.scout.com/football/adp.cfm?page=2',
-       'http://fftoolbox.scout.com/football/adp.cfm?page=3',
-       'http://fftoolbox.scout.com/football/adp.cfm?page=4']
+base = 'https://fftoolbox.scoutfantasysports.com/football/adp.cfm'
+
+urls = [
+    base,
+    base + '?page=2',
+    base + '?page=3',
+    base + '?page=4',
+]
 
 def players(soup):
     grid = soup.find('table', class_='grid')

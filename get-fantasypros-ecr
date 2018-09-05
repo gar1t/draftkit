@@ -4,10 +4,10 @@ import re
 urls = ['http://www.fantasypros.com/nfl/rankings/consensus-cheatsheets.php']
 
 def players(soup):
-
-    for name_link in soup.find_all('a', href=re.compile('^/nfl/(players|teams/.*-defense)')):
+    for name_span in soup.find_all('span', class_='full-name'):
         try:
-            name = name_link.text
+            name = name_span.text
+            name_link = name_span.parent
             team_small = name_link.find_next_sibling('small')
             if team_small:
                 team = strip_nonteam(team_small.text)
