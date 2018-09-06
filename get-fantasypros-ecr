@@ -8,29 +8,24 @@ def players(soup):
         try:
             name = name_span.text
             name_link = name_span.parent
-            team_small = name_link.find_next_sibling('small')
-            if team_small:
-                team = strip_nonteam(team_small.text)
+            maybe_dst = re.match('.+ \((.+)\)', name)
+            if maybe_dst:
+                team = maybe_dst.group(1)
+                name = "%s DST" % team
+                position = "DST"
             else:
-                dst_result = dst_name_team(name)
-                if dst_result:
-                    name, team = dst_result
-                else:
-                    continue
-
-            name_td = name_link.find_parent('td')
-            position_td =  name_td.find_next_sibling('td')
-            position = strip_position_rank(position_td.string)
-
+                team_small = name_link.find_next_sibling('small')
+                team = strip_nonteam(team_small.text)
+                name_td = name_link.find_parent('td')
+                position_td =  name_td.find_next_sibling('td')
+                position = strip_position_rank(position_td.string)
             rank = position_td.find_next_siblings('td')[3].string
-
             yield {
                 'name': name,
                 'team': team,
                 'position': position,
                 'rank': rank
             }
-
         except Exception, e:
             base.debug(e)
 

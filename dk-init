@@ -8,8 +8,8 @@ fi
 dir="$1"
 weights=(
     espn-adp:2
-    espn-ecr:0
-    fantasypros-adp:4
+    espn-ecr:2
+    fantasypros-adp:6
     fantasypros-ecr:4
     ffbcalc:4
     fftoolbox:4

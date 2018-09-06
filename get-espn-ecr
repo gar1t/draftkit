@@ -24,6 +24,7 @@ def players(soup):
                 pos = "DST"
             else:
                 team, pos = name_link.nextSibling.string[2:].split(u'\xa0')[:2]
+                team = team.strip()
 
             yield {
                 'name': name,
